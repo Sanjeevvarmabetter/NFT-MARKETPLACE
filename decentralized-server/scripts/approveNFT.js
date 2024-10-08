@@ -8,7 +8,7 @@ async function main() {
     const MyNFT = await ethers.getContractFactory("MyNFT");
     const myNFT = MyNFT.attach(myNFTAddress);
 
-    const tokenId = 0; // Replace with the minted token ID
+    const tokenId = 1; // Replace with the minted token ID
 
     console.log("Approving NFT for marketplace...");
     const tx = await myNFT.approve(nftMarketplaceAddress, tokenId);

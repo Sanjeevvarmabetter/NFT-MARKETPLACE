@@ -16,7 +16,7 @@ module.exports = {
       chainId: 1337 
     },
     volta: {
-      url: "https://volta-rpc.energyweb.org", 
+      url: "https://volta-rpc.energyweb.org",
       accounts: [process.env.PRIVATE_KEY], 
     },
   },
