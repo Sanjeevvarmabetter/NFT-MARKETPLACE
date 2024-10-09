@@ -32,3 +32,16 @@ NFTMarketplace deployed to: 0xFbf4B3E81803352f83019d05b8A30b83924500A2
 
 
 */
+
+
+//new
+
+/*
+
+Deploying MyNFT...
+MyNFT deployed to: 0xEaA5a368b47B399cf889213ED2112cf1937DB397
+Deploying NFTMarketplace...
+NFTMarketplace deployed to: 0x7575870F2A9b0D29D774599e49dBc391e830a27C
+
+
+*/

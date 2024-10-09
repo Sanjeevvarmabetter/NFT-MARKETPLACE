@@ -44,7 +44,6 @@ contract NFTMarketplace {
         Listing storage listing = listings[listingId]; 
         require(listing.isActive, "Listing is not active"); 
         require(msg.value >= listing.price, "Insufficient payment"); 
-
         listing.isActive = false; 
         nft.transferFrom(address(this), msg.sender, listing.tokenId); 
         
@@ -76,4 +75,33 @@ contract NFTMarketplace {
         
         return activeListings; 
     }
+
+
+    function getOwnedNFTs(address owner) public view returns (uint256[] memory) {
+        uint256 totalSupply = nft.tokencounter(); // fetch the yotal numbet of nfts
+
+        uint256 ownerCount = 0;
+
+
+        // count how many nfts does the owner hold
+        for(uint256 i=0;i<totalSupply;i++) {
+            if(nft.ownerOf(i) == owner) {
+                ownerCount += 1;
+            }   
+            
+            }
+
+    uint256[] memory ownedNFTS = new uint256[](ownerCount);
+    uint256 index = 0;
+
+    for(uint256 i=0;i<totalSupply;i++) {
+        if(nft.ownerOf(i)== owner) {
+            ownedNFTS[index] = i;
+            index += 1;
+        }
+    }   
+    return ownedNFTS;
+
+        }
+
 }

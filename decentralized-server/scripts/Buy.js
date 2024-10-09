@@ -7,7 +7,7 @@ async function main() {
     const balance = await buyer.getBalance();
     console.log(`Buyer balance: ${ethers.utils.formatEther(balance)} ETH`);
 
-    const nftMarketplaceAddress = "0xFbf4B3E81803352f83019d05b8A30b83924500A2"; 
+    const nftMarketplaceAddress = "0x7575870F2A9b0D29D774599e49dBc391e830a27C"; 
     const NFTMarketplace = await ethers.getContractFactory("NFTMarketplace");
     const nftMarketplace = NFTMarketplace.attach(nftMarketplaceAddress); 
 
