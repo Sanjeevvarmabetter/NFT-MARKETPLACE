@@ -3,10 +3,11 @@ import { ethers } from "ethers";
 import axios from "axios";
 import abi from "./NFTabi.json";
 import Marketabi from "./Marketabi.json";
-const NFTMarketplaceAddress = "0x7575870F2A9b0D29D774599e49dBc391e830a27C";
-const MyNFTAddress = "0xEaA5a368b47B399cf889213ED2112cf1937DB397";
-const pinataApiKey = "20a1ac93e10b67f081c5"; 
-const pinataSecretApiKey = "2b3680b650e07a507c4df5a9649b9b6438d7f8e4c3cc0cfab22a73bb968d02d7"; 
+const NFTMarketplaceAddress = process.env.REACT_APP_NFT_MARKETPLACE_ADDRESS;
+const MyNFTAddress = process.env.REACT_APP_MY_NFT_ADDRESS;
+const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY; 
+const pinataSecretApiKey = process.env.REACT_APP_PINATA_SECRET_API_KEY; 
+
 
 
 const Upload = () => {
@@ -83,16 +84,15 @@ const Upload = () => {
 
             const count = 7;
             try {
-                // Mint the NFT
+
                 const tx = await MyNFT.createNFT(tokenURI);
                 const receipt = await tx.wait();
 
                 const mintedTokenId = count; 
 
-                // Approve the newly minted NFT for the marketplace
                 await MyNFT.approve(NFTMarketplaceAddress, mintedTokenId); 
 
-                // List the NFT on the marketplace
+
                 const listTx = await NFTMarketplace.listItem(mintedTokenId, ethers.utils.parseEther(price));
                 await listTx.wait();
 
@@ -112,12 +112,12 @@ const Upload = () => {
         setLoading(true);
         const tokenURI = await uploadToPinata(file);
         console.log(tokenURI);
-        if (!tokenURI) return; // Ensure the tokenURI is returned
+        if (!tokenURI) return; 
 
-        // Specify a price for listing the NFT
-        const price = "0.1"; // Example price, adjust as needed
 
-        await mintApproveAndListNFT(tokenURI, price); // Mint, approve, and list the NFT
+        const price = "0.1"; 
+
+        await mintApproveAndListNFT(tokenURI, price); 
         setLoading(false);
     };
 
