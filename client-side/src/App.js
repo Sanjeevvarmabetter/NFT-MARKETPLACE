@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import Listing from "./Listing";
 import MyCollection from "./MyCollection";
-
+import NFTDisplay from "./Test";
+import Upload from "./Upload";
 function App() {
   return (
     <Router>
@@ -21,6 +22,10 @@ function App() {
             <Button color="inherit" component={Link} to="/my-collection">
               My Collection
             </Button>
+            <Button color="inherit" component={Link} to="/upload">
+            Sell NFT
+            </Button>
+            
           </Toolbar>
         </AppBar>
 
@@ -34,7 +39,9 @@ function App() {
               path="*"
               element={<h1>404 - Page Not Found</h1>}
             />
-          </Routes>
+
+        <Route path="/upload" element={<Upload />} /></Routes>
+
         </Container>
       </div>
     </Router>

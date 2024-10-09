@@ -4,7 +4,7 @@ async function main() {
     const NFTMarketplace = await ethers.getContractFactory("NFTMarketplace");
     const nftMarketplace = NFTMarketplace.attach("0x7575870F2A9b0D29D774599e49dBc391e830a27C"); // Replace with your deployed address
 
-    const tokenId = 5; 
+    const tokenId = 6; // change the tokenID accoring to the cunter 
     const price = ethers.parseEther("0.1"); // Replace with the desired price
 
     console.log("Listing NFT...");

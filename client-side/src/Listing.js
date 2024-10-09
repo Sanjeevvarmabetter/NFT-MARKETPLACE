@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { Button, Card, CardContent, Typography, Grid, CircularProgress, Snackbar } from "@mui/material";
-import abi from "./abi.json"; // Ensure the path is correct
+import abi from "./Marketabi.json"; // Ensure the path is correct
 import "./ActiveListings.css"; 
 
 const NFTMarketplaceAddress = "0x7575870F2A9b0D29D774599e49dBc391e830a27C";
@@ -44,7 +44,8 @@ const Listing = () => {
                     
                     tokenId: listing.tokenId.toString(),
                     price: ethers.utils.formatEther(listing.price.toString()),
-                    seller: listing.seller
+                    seller: listing.seller,
+                    // image:metadata.image,
                 }));
                 
                 setActiveListings(formattedListings);
@@ -124,6 +125,7 @@ const Listing = () => {
                                 <CardContent>
                                     <img
                                         alt="NFT Image"
+                                        src={listing.image}
                                         style={{ width: '100%', height: 'auto', marginBottom: '16px' }} 
                                     />
                                     <Typography variant="h6">Listing ID: {listing.listingId}</Typography>
