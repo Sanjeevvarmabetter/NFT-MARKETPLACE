@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from 'react';
 
 const NFTDisplay = () => {
-  const [nftData, setNftData] = useState(null);
-  const metadataHash = 'QmVrzkBbHzegZsm5DV9h83EANoNEwGRwkaFbtja1h2Tvi9'; // Your metadata hash
+  const [nftDataList, setNftDataList] = useState([]);
+  const metadataHashes = [
+    'QmYD97zZfXHKZv7DJDWrxQyUPAxSdrPDJ2dctzZTq8PFmT',
+    'QmVrzkBbHzegZsm5DV9h83EANoNEwGRwkaFbtja1h2Tvi9',
+    'QmefqMdVSbTHV1SNafHpdNyYu2pCJDd6JNoZrM4TkZ946T',
+    'QmY3xQFLbnyuhAoAR1AbNLrQmNEzHrGwLstANZ529XV2sM',
+    'QmSq7nMLEN9qc2kzcL21BpeLXwu4ndC8wcS6eBDBxNpW2j',
+    'QmdPwmgJxHqtN9NfbgwjvZZvMQVQGMXUUQPZAe85kBF4KE',
+  ];
 
   useEffect(() => {
     const fetchNFTData = async () => {
-      try {
-        // Fetching metadata from IPFS
-        const response = await fetch(`https://ipfs.io/ipfs/${metadataHash}`);
-        
-        // Check if the response is OK
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+      const nftDataPromises = metadataHashes.map(async (hash) => {
+        try {
+          const response = await fetch(`https://ipfs.io/ipfs/${hash}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+
+          // Update the image URL format to use HTTP
+          return {
+            ...data,
+            image: data.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+          };
+        } catch (error) {
+          console.error(`Error fetching NFT metadata for hash ${hash}:`, error);
+          return null; // Return null for failed fetches
         }
+      });
 
-        const data = await response.json();
-
-        // Update the image URL format to use HTTP
-        const updatedData = {
-          ...data,
-          image: data.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
-        };
-
-        setNftData(updatedData);
-      } catch (error) {
-        console.error('Error fetching NFT metadata:', error);
-      }
+      // Wait for all promises to resolve
+      const results = await Promise.all(nftDataPromises);
+      // Filter out any null values (failed fetches)
+      setNftDataList(results.filter(data => data !== null));
     };
 
     fetchNFTData();
-  }, [metadataHash]);
+  }, [metadataHashes]);
 
-  if (!nftData) {
+  if (nftDataList.length === 0) {
     return <div>Loading...</div>;
   }
 
-  const { image, name, description } = nftData; // Adjust according to your metadata structure
-
   return (
-    <div className="nft-card">
-      <img src={image} alt={name} />
-      <h3>{name}</h3>
-      <p>{description}</p>
+    <div className="nft-gallery">
+      {nftDataList.map((nftData, index) => (
+        <div className="nft-card" key={index}>
+          <img src={nftData.image} alt={nftData.name} />
+          <h3>{nftData.name}</h3>
+          <p>{nftData.description}</p>
+        </div>
+      ))}
     </div>
   );
 };

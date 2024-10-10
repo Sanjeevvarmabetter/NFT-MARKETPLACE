@@ -33,6 +33,7 @@ function App() {
         <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
           <Routes>
             <Route path="/" element={<Listing />} />
+            <Route path="/test" element={<NFTDisplay />} />
             <Route path="/my-collection" element={<MyCollection />} />
             {/* Fallback Route for 404 */}
             <Route
@@ -40,7 +41,7 @@ function App() {
               element={<h1>404 - Page Not Found</h1>}
             />
 
-        <Route path="/upload" element={<Upload />} /></Routes>
+<Route path="/upload" element={<Upload />} /></Routes>
 
         </Container>
       </div>

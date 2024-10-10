@@ -1,0 +1,75 @@
+/* UploadNFT.css */
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    width: 100%;
+}
+
+input[type="file"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+input[type="text"],
+textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px; /* Set a minimum height for the textarea */
+}
+
+button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Make the button full-width */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+button:disabled {
+    background-color: #cccccc; /* Light grey color when disabled */
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 10px;
+    color: #d9534f; /* Bootstrap danger color */
+    font-size: 14px;
+}

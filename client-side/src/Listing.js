@@ -46,6 +46,7 @@ const Listing = () => {
                     price: ethers.utils.formatEther(listing.price.toString()),
                     seller: listing.seller,
                     // image:metadata.image,
+                    
                 }));
                 
                 setActiveListings(formattedListings);

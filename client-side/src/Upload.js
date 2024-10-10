@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import abi from "./NFTabi.json";
 import Marketabi from "./Marketabi.json";
+
 const NFTMarketplaceAddress = process.env.REACT_APP_NFT_MARKETPLACE_ADDRESS;
 const MyNFTAddress = process.env.REACT_APP_MY_NFT_ADDRESS;
 const pinataApiKey = process.env.REACT_APP_PINATA_API_KEY; 
@@ -76,13 +77,14 @@ const Upload = () => {
     };
 
     const mintApproveAndListNFT = async (tokenURI, price) => {
+        const count = 9;
+
         if (typeof window.ethereum !== "undefined") {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const MyNFT = new ethers.Contract(MyNFTAddress, abi.abi, signer);
             const NFTMarketplace = new ethers.Contract(NFTMarketplaceAddress, Marketabi.abi, signer);
 
-            const count = 7;
             try {
 
                 const tx = await MyNFT.createNFT(tokenURI);
@@ -122,19 +124,31 @@ const Upload = () => {
     };
 
     return (
-        <div>
+        <div className="upload-container">
             <h1>Upload NFT</h1>
             <form onSubmit={handleUploadAndMint}>
                 <input type="file" onChange={handleFileChange} required />
-                <input type="text" value={title} onChange={handleTitleChange} placeholder="Title" required />
-                <textarea value={description} onChange={handleDescriptionChange} placeholder="Description" required />
+                <input
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="Title"
+                    required
+                />
+                <textarea
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    placeholder="Description"
+                    required
+                />
                 <button type="submit" disabled={loading}>
                     {loading ? "Uploading..." : "Mint and List NFT"}
                 </button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className="message">{message}</p>}
         </div>
     );
 };
+
 
 export default Upload;
