@@ -77,20 +77,20 @@ const Upload = () => {
     };
 
     const mintApproveAndListNFT = async (tokenURI, price) => {
-        const count = 9;
 
         if (typeof window.ethereum !== "undefined") {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const MyNFT = new ethers.Contract(MyNFTAddress, abi.abi, signer);
             const NFTMarketplace = new ethers.Contract(NFTMarketplaceAddress, Marketabi.abi, signer);
+            const count = MyNFT.tokencounter();
 
             try {
 
                 const tx = await MyNFT.createNFT(tokenURI);
                 const receipt = await tx.wait();
 
-                const mintedTokenId = count; 
+                const mintedTokenId = 8; 
 
                 await MyNFT.approve(NFTMarketplaceAddress, mintedTokenId); 
 
