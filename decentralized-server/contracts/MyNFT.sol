@@ -15,7 +15,7 @@ contract MyNFT is  ERC721URIStorage, Ownable {
     }
 
 
-    function createNFT(string memory tokenURI) public onlyOwner returns(uint256) {
+    function createNFT(string memory tokenURI) public  returns(uint256) {
         uint256 newTokenId  = tokencounter;
         _safeMint(msg.sender,newTokenId);
         _setTokenURI(newTokenId,tokenURI);
