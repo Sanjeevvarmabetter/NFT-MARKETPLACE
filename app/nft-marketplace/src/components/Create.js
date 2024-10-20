@@ -64,24 +64,36 @@ const Create = ({ marketplace, nft }) => {
 
   const mintThenList = async (result) => {
     const uri = `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`;
-
+  
     try {
-      // Mint NFT
-      const tx = await nft.createNFT(uri);
-      const receipt = await tx.wait();
-      const tokenId = receipt.events[0].args.tokenId; // Get the tokenId from the event args
+        // Log URI for debugging
+        console.log("NFT URI:", uri);
 
-      // Approve marketplace to spend NFT
-      await nft.setApprovalForAll(marketplace.address, true);
-      
-      // Add NFT to marketplace
-      const listingPrice = ethers.utils.parseEther(price.toString());
-      await marketplace.makeItem(nft.address, tokenId, listingPrice);
+        // Mint NFT with manual gas limit
+        const tx = await nft.createNFT(uri, { gasLimit: 500000 });
+        const receipt = await tx.wait();
+        const tokenId = receipt.events[0].args.tokenId;
+
+        // Approve marketplace to spend NFT
+        const approvalTx = await nft.setApprovalForAll(marketplace.address, true);
+        await approvalTx.wait(); // Ensure approval is confirmed
+
+        // Validate and set the price
+        const numericPrice = parseFloat(price);
+        if (isNaN(numericPrice) || numericPrice <= 0) {
+            console.error("Invalid price value");
+            return;
+        }
+
+        const listingPrice = ethers.utils.parseEther(numericPrice.toString());
+        await marketplace.makeItem(nft.address, tokenId, listingPrice);
+
     } catch (error) {
-      console.log("Error in minting or listing NFT: ", error);
+        console.error("Error in minting or listing NFT: ", error);
     }
-  }
+};
 
+  
   return (
     <div className="container-fluid mt-5">
       <div className="row">

@@ -7,9 +7,9 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract Marketplace  {
 
-    // Variables
-    address payable public immutable feeAccount; // the account that receives fees
-    uint public immutable feePercent; // the fee percentage on sales 
+    
+    address payable public immutable feeAccount; 
+    uint public immutable feePercent;  
     uint public itemCount; 
 
     struct Item {
@@ -45,14 +45,10 @@ contract Marketplace  {
         feePercent = _feePercent;
     }
 
-    // Make item to offer on the marketplace
     function makeItem(IERC721 _nft, uint _tokenId, uint _price) external  {
         require(_price > 0, "Price must be greater than zero");
-        // increment itemCount
         itemCount ++;
-        // transfer nft
         _nft.transferFrom(msg.sender, address(this), _tokenId);
-        // add new item to items mapping
         items[itemCount] = Item (
             itemCount,
             _nft,
@@ -61,7 +57,6 @@ contract Marketplace  {
             payable(msg.sender),
             false
         );
-        // emit Offered event
         emit Offered(
             itemCount,
             address(_nft),

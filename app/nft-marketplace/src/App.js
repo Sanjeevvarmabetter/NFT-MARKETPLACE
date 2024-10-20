@@ -12,7 +12,6 @@ import { useState } from 'react'
 import { ethers } from "ethers"
 import { Spinner } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import './App.css';
 
 function App() {

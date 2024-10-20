@@ -13,7 +13,7 @@ export default function MyPurchases({ marketplace, nft, account }) {
       const uri = await nft.tokenURI(i.tokenId)
       const response = await fetch(uri)
       const metadata = await response.json()
-      const totalPrice = await marketplace.getTotalPrice(i.itemId)   // abi content fetching
+      const totalPrice = await marketplace.getTotalPrice(i.itemId)   //
       let purchasedItem = {
         totalPrice,
         price: i.price,
