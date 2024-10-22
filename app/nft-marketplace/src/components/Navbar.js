@@ -2,10 +2,11 @@ import {
     Link
 } from "react-router-dom";
 import { Navbar, Nav, Button, Container } from 'react-bootstrap'
+import '../App.css'; // Assuming the CSS file is named App.css
 
 const Navigation = ({ web3Handler, account }) => {
     return (
-        <Navbar expand="lg" bg="secondary" variant="dark">
+        <Navbar expand="lg" className="custom-navbar" variant="dark">
             <Container>
 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
