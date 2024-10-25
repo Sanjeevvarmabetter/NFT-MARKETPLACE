@@ -8,6 +8,9 @@ const Create = ({ mergedContract }) => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [loading,setLoading] = useState('');
+
+
 
   // Pinata API credentials
   const pinataApiKey = "20a1ac93e10b67f081c5";
@@ -49,6 +52,8 @@ const Create = ({ mergedContract }) => {
   const createNFT = async () => {
     if (!image || !price || !name || !description) return;
 
+    setLoading(true);
+
     try {
       const metadata = {
         image,
@@ -71,6 +76,7 @@ const Create = ({ mergedContract }) => {
       await mintThenList(metadataUri);
     } catch (error) {
       console.log("Pinata metadata upload error: ", error);
+      setLoading(false);
     }
   };
 
@@ -93,7 +99,13 @@ const Create = ({ mergedContract }) => {
         console.error("Error in minting or listing NFT: ", error);
         alert("An error occurred while minting or listing the NFT. Please check the console for details.");
     }
-};
+      // adding finally block to at last to reset the  state of the loading
+    finally {
+      setLoading(false);
+    }
+
+    };
+
 
 
   return (
@@ -107,8 +119,9 @@ const Create = ({ mergedContract }) => {
               <Form.Control onChange={(e) => setDescription(e.target.value)} size="lg" required as="textarea" placeholder="Description" />
               <Form.Control onChange={(e) => setPrice(e.target.value)} size="lg" required type="number" placeholder="Price in ETH" />
               <div className="d-grid px-0">
-                <Button onClick={createNFT} variant="primary" size="lg">
-                  Create & List NFT!
+                <Button onClick={createNFT} variant="primary" size="lg" disabled={loading}>
+
+                 {loading ? 'Minting...': 'Create & List NFT!' }
                 </Button>
               </div>
             </Row>
